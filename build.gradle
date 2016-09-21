@@ -13,15 +13,6 @@ apply plugin: 'com.jfrog.bintray'
 // 这个version是library的版本，更新后也需要更改这个值
 version = "1.0.0"
 
-publish{
-    userOrg = 'kuncho'
-    groupId = 'kwin.com.kwinlib'
-    artifactId = ''
-    publishVersion = ''
-    desc = ''
-    website = ''
-}
-
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
@@ -52,30 +43,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-/*
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'KwinLib'
-
-    publishedGroupId = 'kwin.com.kwinlib'
-    libraryName = 'KwinLib'
-    artifact = 'kwinlib'
-
-    libraryDescription = 'my first lib.'
-
-    siteUrl = 'https://github.com/KunCho/KwinLib'
-    gitUrl = 'https://github.com/KunCho/KwinLib.git'
-
-    libraryVersion = '1.0.0'
-
-    developerId = 'kwin'
-    developerName = 'Kwin'
-    developerEmail = 'zk8087@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}*/
 def siteUrl = 'https://github.com/KunCho/KwinLib'   // 项目的主页
 def gitUrl = 'https://github.com/KunCho/KwinLib.git'   // Git仓库的url
 group = "kwin.com.kwinlib"            // Maven Group ID for the artifact，
@@ -87,7 +54,7 @@ install {
                 packaging 'aar'
                 // Add your description here
                 name 'first demo'     //项目的描述 你可以多写一点
-                url siteUrl
+                url 'https://github.com/KunCho/KwinLib'
                 // Set your license
                 licenses {
                     license {
@@ -103,9 +70,9 @@ install {
                     }
                 }
                 scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
+                    connection 'https://github.com/KunCho/KwinLib'
+                    developerConnection 'https://github.com/KunCho/KwinLib.git'
+                    url 'https://github.com/KunCho/KwinLib'
                 }
             }
         }
@@ -119,12 +86,12 @@ task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
-task javadocJar(type: Jar, dependsOn: javadoc) {
+/*task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
-}
+}*/
 artifacts {
-    archives javadocJar
+//    archives javadocJar
     archives sourcesJar
 }
 Properties properties = new Properties()
@@ -133,12 +100,14 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
+    /*user = "kuncho"
+    key = "0dbedbfe94e3c999644fa8421cee8764a82e7433"*/
     configurations = ['archives']
     pkg {
-        repo = "maven"          //这个应该是传到maven的仓库的
+        repo = "KwinLib"          //这个应该是传到maven的仓库的
         name = "kwinlib"    //发布的项目名字
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
+        websiteUrl = 'https://github.com/KunCho/KwinLib'
+        vcsUrl = 'https://github.com/KunCho/KwinLib.git'
         licenses = ["Apache-2.0"]
         publish = true
     }
